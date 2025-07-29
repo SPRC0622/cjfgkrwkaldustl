@@ -940,6 +940,22 @@ function selectDeepConnection() {
     showScreen('companionMeeting');
     const content = document.getElementById('companionContent');
     
+    // Day별 다른 스토리 제공
+    if (gameState.currentDay === 6) {
+        showDay6Selection();
+    } else if (gameState.currentDay === 7) {
+        showDay7Story();
+    } else if (gameState.currentDay === 8) {
+        showDay8Story();
+    } else {
+        // Day 9+ 기본 선택
+        showDefaultDeepConnection();
+    }
+}
+
+function showDay6Selection() {
+    const content = document.getElementById('companionContent');
+    
     // 친밀도 높은 순으로 정렬
     const sortedCharacters = Object.keys(characters).sort((a, b) => 
         characters[b].intimacy - characters[a].intimacy
@@ -963,7 +979,7 @@ function selectDeepConnection() {
     
     content.innerHTML = `
         <div class="header">
-            <h2>💝 누구와 더 깊은 시간을?</h2>
+            <h2>💝 Day 6 - 누구와 더 깊은 시간을?</h2>
         </div>
         <div class="result-section">
             <p style="line-height: 1.8; margin-bottom: 20px;">
@@ -974,6 +990,287 @@ function selectDeepConnection() {
                 ⏭️ 스킵하고 다음 날로 (Day ${gameState.currentDay + 1})
             </button>
             <button class="back-button" onclick="showMainMenu()">나중에 생각해보기</button>
+        </div>
+    `;
+}
+
+function showDay7Story() {
+    const content = document.getElementById('companionContent');
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>🌙 Day 7 - 더 깊어진 밤</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                벌써 일주일째 이 도서관에 다니고 있다.<br><br>
+                처음엔 그냥 시간 때우기였는데, 이제는 여기 오는 게 하루의 유일한 기대가 되었다.<br><br>
+                오늘은 평소보다 늦은 시간이라 그런지, 도서관이 더 조용하고 신비로워 보인다.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 1.2rem; color: #667eea; margin-bottom: 15px;">💫 특별한 순간이 다가오고 있다</div>
+            </div>
+            <button class="action-button" onclick="exploreDay7()" style="width: 100%; margin-bottom: 15px;">
+                📚 조용한 도서관을 둘러보기
+            </button>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 다음 날로 (Day 8)
+            </button>
+        </div>
+    `;
+}
+
+function showDay8Story() {
+    const content = document.getElementById('companionContent');
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>✨ Day 8 - 마법 같은 저녁</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                오늘따라 도서관의 분위기가 특별하다.<br><br>
+                따뜻한 조명 아래에서 책을 읽는 사람들, 조용히 대화를 나누는 이들...<br><br>
+                문득 이곳에서 만난 사람들이 얼마나 소중한지 깨닫게 된다.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 1.2rem; color: #667eea; margin-bottom: 15px;">🌟 진정한 인연을 느끼는 순간</div>
+            </div>
+            <button class="action-button" onclick="reflectOnJourney()" style="width: 100%; margin-bottom: 15px;">
+                💭 지금까지의 여정을 돌아보기
+            </button>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 다음 날로 (Day 9 - 클라이맥스)
+            </button>
+        </div>
+    `;
+}
+
+function showDefaultDeepConnection() {
+    const content = document.getElementById('companionContent');
+    
+    // Day 9+ 기본 로직 (기존 코드 유지)
+    const sortedCharacters = Object.keys(characters).sort((a, b) => 
+        characters[b].intimacy - characters[a].intimacy
+    );
+    
+    let characterButtons = '';
+    sortedCharacters.forEach(charId => {
+        const char = characters[charId];
+        if (char.intimacy > 0) {
+            characterButtons += `
+                <button class="situation-button" onclick="deepMeeting('${charId}')" style="margin-bottom: 10px;">
+                    <span class="situation-emoji">${char.emoji}</span>
+                    <div>
+                        <div class="situation-text">${char.name}와 마지막 대화</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">${char.location} • 친밀도 ${char.intimacy}</div>
+                    </div>
+                </button>
+            `;
+        }
+    });
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>🌙 마지막 밤, 누구와 함께?</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                도서관에서의 마지막 밤... 누구와 함께 보내고 싶은가?
+            </p>
+            ${characterButtons}
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 혼자서 마지막 밤 보내기
+            </button>
+        </div>
+    `;
+}
+
+function exploreDay7() {
+    const content = document.getElementById('companionContent');
+    
+    // 친밀도 가장 높은 캐릭터 찾기
+    const sortedCharacters = Object.keys(characters).sort((a, b) => 
+        characters[b].intimacy - characters[a].intimacy
+    );
+    const favoriteChar = characters[sortedCharacters[0]];
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>📚 Day 7 - 조용한 발견</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                도서관을 조용히 둘러보다가 ${favoriteChar.emoji} ${favoriteChar.name}이(가) 있는 ${favoriteChar.location}을 지나게 되었다.<br><br>
+                ${favoriteChar.name}은(는) 평소보다 더 집중해서 무언가에 몰두하고 있다.<br><br>
+                살짝 다가가서 보니, 당신과의 만남들을 일기장에 적고 있는 것 같다.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 0.95rem; color: #718096; font-style: italic;">
+                    "${favoriteChar.name}도 우리의 만남을 소중히 여기고 있구나..."
+                </div>
+            </div>
+            <button class="action-button" onclick="approachQuietly()" style="width: 100%; margin-bottom: 10px;">
+                조용히 다가가서 인사하기
+            </button>
+            <button class="action-button" onclick="watchFromDistance()" style="width: 100%; margin-bottom: 10px;">
+                멀리서 조용히 지켜보기
+            </button>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 다음 날로 (Day 8)
+            </button>
+        </div>
+    `;
+}
+
+function reflectOnJourney() {
+    const content = document.getElementById('companionContent');
+    
+    // 친밀도 통계 계산
+    const totalIntimacy = Object.values(characters).reduce((sum, char) => sum + char.intimacy, 0);
+    const avgIntimacy = Math.round(totalIntimacy / 5);
+    const bestFriends = Object.values(characters).filter(char => char.intimacy >= 10);
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>💭 Day 8 - 여정의 돌아봄</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                이 도서관에서 보낸 8일간을 돌아본다...<br><br>
+                ${bestFriends.length > 0 ? 
+                    `${bestFriends.map(char => char.emoji + ' ' + char.name).join(', ')}와(과) 특별한 인연을 맺었고,` :
+                    '여러 사람들과 만나며 조금씩 마음을 열었고,'
+                }<br><br>
+                처음 이곳에 왔을 때의 막막함은 이제 따뜻한 기대감으로 바뀌어 있다.
+            </p>
+            <div style="background: linear-gradient(135deg, #e8f4f8, #f7f1e8); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                <h4 style="color: #4a5568; margin: 0 0 15px 0; text-align: center;">🌟 나의 성장 통계</h4>
+                <div style="text-align: center;">
+                    <div style="margin: 10px 0;">평균 친밀도: <strong>${avgIntimacy}/20</strong></div>
+                    <div style="margin: 10px 0;">특별한 친구: <strong>${bestFriends.length}명</strong></div>
+                    <div style="margin: 10px 0;">총 만남 횟수: <strong>8일</strong></div>
+                </div>
+            </div>
+            <button class="action-button" onclick="feelGrateful()" style="width: 100%; margin-bottom: 10px;">
+                🙏 감사한 마음 느끼기
+            </button>
+            <button class="action-button" onclick="lookToFuture()" style="width: 100%; margin-bottom: 10px;">
+                🌅 앞으로의 기대하기
+            </button>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 다음 날로 (Day 9 - 클라이맥스)
+            </button>
+        </div>
+    `;
+}
+
+function approachQuietly() {
+    const content = document.getElementById('companionContent');
+    const sortedCharacters = Object.keys(characters).sort((a, b) => 
+        characters[b].intimacy - characters[a].intimacy
+    );
+    const favoriteChar = characters[sortedCharacters[0]];
+    
+    // 친밀도 +1 증가
+    favoriteChar.intimacy = Math.min(20, favoriteChar.intimacy + 1);
+    localStorage.setItem(`intimacy_${sortedCharacters[0]}`, favoriteChar.intimacy.toString());
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>😊 Day 7 - 따뜻한 순간</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                조용히 다가가자 ${favoriteChar.name}이(가) 고개를 들어 미소 짓는다.<br><br>
+                "아, 왔네요. 저 지금... 음, 그냥 일기 같은 거 써요. 요즘 좋은 일들이 많아서."<br><br>
+                ${favoriteChar.name}의 얼굴이 살짝 붉어지며 일기장을 덮는다.
+            </p>
+            <div style="text-align: center; margin: 30px 0; color: #e53e3e;">
+                💝 ${favoriteChar.name}와의 친밀도가 올랐습니다! (${favoriteChar.intimacy}/20)
+            </div>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%;">
+                ⏭️ 다음 날로 (Day 8)
+            </button>
+        </div>
+    `;
+}
+
+function watchFromDistance() {
+    const content = document.getElementById('companionContent');
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>👀 Day 7 - 조용한 관찰</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                멀리서 조용히 지켜본다.<br><br>
+                사람들이 각자의 공간에서 평화롭게 시간을 보내는 모습이 아름답다.<br><br>
+                가끔 이렇게 거리를 두고 바라보는 것도 좋은 것 같다.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 0.95rem; color: #718096; font-style: italic;">
+                    "때로는 지켜보는 것만으로도 충분하다"
+                </div>
+            </div>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%;">
+                ⏭️ 다음 날로 (Day 8)
+            </button>
+        </div>
+    `;
+}
+
+function feelGrateful() {
+    const content = document.getElementById('companionContent');
+    
+    // 모든 캐릭터 친밀도 +1
+    Object.keys(characters).forEach(charId => {
+        characters[charId].intimacy = Math.min(20, characters[charId].intimacy + 1);
+        localStorage.setItem(`intimacy_${charId}`, characters[charId].intimacy.toString());
+    });
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>🙏 Day 8 - 감사의 마음</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                이 모든 만남이 얼마나 소중한지 새삼 깨닫는다.<br><br>
+                혼자였다면 절대 느낄 수 없었을 따뜻함들...<br><br>
+                마음속 깊이 감사의 기도를 올린다.
+            </p>
+            <div style="text-align: center; margin: 30px 0; color: #e53e3e;">
+                💝 모든 친구들과의 친밀도가 올랐습니다!
+            </div>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%;">
+                ⏭️ 다음 날로 (Day 9 - 클라이맥스)
+            </button>
+        </div>
+    `;
+}
+
+function lookToFuture() {
+    const content = document.getElementById('companionContent');
+    
+    content.innerHTML = `
+        <div class="header">
+            <h2>🌅 Day 8 - 미래에 대한 기대</h2>
+        </div>
+        <div class="result-section">
+            <p style="line-height: 1.8; margin-bottom: 20px;">
+                앞으로도 이런 따뜻한 만남들이 계속되길 바란다.<br><br>
+                도서관을 나서더라도, 이곳에서 배운 것들을 가지고 살아갈 수 있을 것 같다.<br><br>
+                새로운 시작에 대한 설렘이 마음을 가득 채운다.
+            </p>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 0.95rem; color: #718096; font-style: italic;">
+                    "끝이 아니라 새로운 시작"
+                </div>
+            </div>
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%;">
+                ⏭️ 다음 날로 (Day 9 - 클라이맥스)
+            </button>
         </div>
     `;
 }
