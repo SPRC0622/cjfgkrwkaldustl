@@ -970,6 +970,9 @@ function selectDeepConnection() {
                 일주일 동안 만난 사람들 중에서 누군가와 더 특별한 시간을 보내고 싶다.
             </p>
             ${characterButtons}
+            <button class="action-button" onclick="continueToNextDay()" style="width: 100%; margin-top: 20px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                ⏭️ 스킵하고 다음 날로 (Day ${gameState.currentDay + 1})
+            </button>
             <button class="back-button" onclick="showMainMenu()">나중에 생각해보기</button>
         </div>
     `;
@@ -1460,7 +1463,7 @@ function continueToNextDay() {
     localStorage.setItem('currentDay', gameState.currentDay.toString());
     
     if (gameState.currentDay <= 8) {
-        continueToDay6(); // 6-8일 반복적으로 심화 관계
+        selectDeepConnection(); // 6-8일 반복적으로 심화 관계
     } else {
         prepareEnding();
     }
