@@ -81,6 +81,35 @@ function showMainMenu() {
     checkGameProgress();
 }
 
+function startOrContinueGame() {
+    if (gameState.currentDay === 0) {
+        // 첫 게임 시작
+        startGame();
+    } else if (gameState.currentDay >= 6) {
+        // Day 6 이후에는 심화 관계로
+        selectDeepConnection();
+    } else {
+        // Day 1-5: 순차적 첫 만남 계속
+        const dayCharacterMap = {
+            1: 'stone',
+            2: 'flame', 
+            3: 'quest',
+            4: 'bada',
+            5: 'zero'
+        };
+        
+        const characterId = dayCharacterMap[gameState.currentDay];
+        if (characterId) {
+            meetCharacter(characterId, 'first_meeting');
+        } else {
+            // 예외 상황 - 랜덤 만남
+            const availableCharacters = Object.keys(characters);
+            const randomCharacter = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
+            meetCharacter(randomCharacter, 'random_meeting');
+        }
+    }
+}
+
 function showRandomCompanion() {
     showScreen('randomCompanion');
 }
@@ -111,38 +140,9 @@ function updateConcernedFriends() {
     // 구현 예정: 오랫동안 안 만난 캐릭터들 표시
 }
 
-// 랜덤 동반자 만나기
+// 랜덤 동반자 만나기 (구버전 호환)
 function meetRandomCompanion(situation) {
-    if (gameState.currentDay === 0) {
-        // 첫 게임 시작
-        startGame();
-        return;
-    }
-    
-    if (gameState.currentDay >= 6) {
-        // Day 6 이후에는 심화 관계로
-        selectDeepConnection();
-        return;
-    }
-    
-    // Day 1-5: 순차적 첫 만남
-    const dayCharacterMap = {
-        1: 'stone',
-        2: 'flame', 
-        3: 'quest',
-        4: 'bada',
-        5: 'zero'
-    };
-    
-    const characterId = dayCharacterMap[gameState.currentDay];
-    if (characterId) {
-        meetCharacter(characterId, 'first_meeting');
-    } else {
-        // 예외 상황
-        const availableCharacters = Object.keys(characters);
-        const randomCharacter = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
-        meetCharacter(randomCharacter, situation);
-    }
+    startOrContinueGame();
 }
 
 function startGame() {

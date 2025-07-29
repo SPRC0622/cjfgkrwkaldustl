@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="button-grid">
-                    <button class="main-button" onclick="showRandomCompanion()">
-                        <div class="button-emoji">🎲</div>
-                        <div class="button-text">오늘의 동반자 만나기</div>
-                        <div class="button-subtitle">새로운 하루, 새로운 만남</div>
+                    <button class="main-button" onclick="startOrContinueGame()">
+                        <div class="button-emoji">🌙</div>
+                        <div class="button-text">게임 시작하기</div>
+                        <div class="button-subtitle">신비로운 도서관에서의 만남</div>
                     </button>
 
                     <button class="main-button" onclick="showCompanionHistory()">
@@ -41,39 +41,6 @@
             </div>
         </div>
 
-        <!-- 랜덤 동반자 만나기 -->
-        <div id="randomCompanion" class="screen">
-            <div class="card">
-                <div class="header">
-                    <h2>🎲 오늘의 동반자 만나기</h2>
-                    <p>지금 어떤 기분이신가요?</p>
-                </div>
-                
-                <div class="situation-buttons">
-                    <button class="situation-button" onclick="meetRandomCompanion('lonely')">
-                        <span class="situation-emoji">😔</span>
-                        <span class="situation-text">외롭고 막막해요</span>
-                    </button>
-                    
-                    <button class="situation-button" onclick="meetRandomCompanion('tired')">
-                        <span class="situation-emoji">😴</span>
-                        <span class="situation-text">힘들고 지쳐요</span>
-                    </button>
-                    
-                    <button class="situation-button" onclick="meetRandomCompanion('confused')">
-                        <span class="situation-emoji">😕</span>
-                        <span class="situation-text">뭘 해야 할지 모르겠어요</span>
-                    </button>
-                    
-                    <button class="situation-button" onclick="meetRandomCompanion('random')">
-                        <span class="situation-emoji">🌟</span>
-                        <span class="situation-text">그냥 누군가 만나고 싶어요</span>
-                    </button>
-                </div>
-                
-                <button class="back-button" onclick="showMainMenu()">🏠 메인으로 돌아가기</button>
-            </div>
-        </div>
 
         <!-- 동반자 만남 화면 -->
         <div id="companionMeeting" class="screen">
