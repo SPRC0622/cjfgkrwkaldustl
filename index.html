@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 철학적 동반자</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 메인 메뉴 -->
+        <div id="mainMenu" class="screen active">
+            <div class="card">
+                <div class="header">
+                    <h1>🌟 철학적 동반자</h1>
+                    <p>당신의 마음을 이해하는 다섯 명의 친구들</p>
+                </div>
+
+                <!-- 걱정하는 친구들 섹션 -->
+                <div id="concernedFriends" style="display: none; margin-bottom: 25px;">
+                    <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 15px;">
+                        <h3 style="margin: 0; font-size: 1.2rem;">💝 걱정하는 친구들</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 0.9rem; opacity: 0.9;">오랫동안 못 봬서 걱정하고 있어요</p>
+                    </div>
+                    <div id="concernedList"></div>
+                </div>
+
+                <div class="button-grid">
+                    <button class="main-button" onclick="startOrContinueGame()">
+                        <div class="button-emoji">🌙</div>
+                        <div class="button-text">게임 시작하기</div>
+                        <div class="button-subtitle">신비로운 도서관에서의 만남</div>
+                    </button>
+
+                    <button class="main-button" onclick="showCompanionHistory()">
+                        <div class="button-emoji">📔</div>
+                        <div class="button-text">내 동반자 기록 보기</div>
+                        <div class="button-subtitle">지금까지의 소중한 인연들</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 동반자 만남 화면 -->
+        <div id="companionMeeting" class="screen">
+            <div class="card">
+                <div id="companionContent"></div>
+                <button class="back-button" onclick="showMainMenu()">🏠 메인으로 돌아가기</button>
+            </div>
+        </div>
+
+        <!-- 동반자 기록 보기 -->
+        <div id="companionHistory" class="screen">
+            <div class="card">
+                <div class="header">
+                    <h2>📔 내 동반자 기록</h2>
+                    <p>소중한 인연들과의 추억</p>
+                </div>
+                
+                <!-- 소중한 친구들 섹션 -->
+                <div id="specialFriendsSection">
+                    <h3 style="color: #e53e3e; margin-bottom: 15px; text-align: center;">💖 내 소중한 친구들</h3>
+                    <div id="specialFriendsList"></div>
+                </div>
+                
+                <!-- 전체 캐릭터 현황 -->
+                <div id="allCharactersSection">
+                    <h3 style="color: #4a5568; margin: 30px 0 15px 0; text-align: center;">👥 모든 동반자들</h3>
+                    <div id="allCharactersList"></div>
+                </div>
+                
+                <button class="back-button" onclick="showMainMenu()">🏠 메인으로 돌아가기</button>
+            </div>
+        </div>
+
+        <!-- 개별 캐릭터 만남 -->
+        <div id="individualMeeting" class="screen">
+            <div class="card">
+                <div id="individualContent"></div>
+                <button class="back-button" onclick="showMainMenu()">🏠 메인으로 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
